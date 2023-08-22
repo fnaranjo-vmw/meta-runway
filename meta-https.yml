@@ -1,0 +1,41 @@
+#! #####################################################################
+#! If you are specifying different teams in `pipeline.yml` for some of your pipelines
+#! you must set this `meta.yml` pipeline in the "main" team of you Concourse instance.
+#! Only pipelines in the "main" team are able to set pipelines in another team.
+#! #####################################################################
+#! However, if you are running your pipelines in Runway or any Concourse instance
+#! for which you don't have permissions over the "main" team, then you will need
+#! to set all your pipelines in the same team or have `meta.yml` per team.
+#! #####################################################################
+
+
+#! #####################################################################
+#! To set this pipeline run:
+#!---------------------------------------------------------------------
+#! MYTARGET="runway"
+#! MYTEAM="cryo"
+#! fly -t "${MYTARGET}" set-pipeline -p metapipeline --team "${MYTEAM}" -c <(ytt -f meta-https.yml -f pipelines.yml)
+#! #####################################################################
+
+#@ load("@ytt:data", "data")
+---
+resources:
+#@ for p in data.values.pipelines:
+- name: #@ p["name"]
+  type: git
+  source:
+    uri: #@ 'https://github.com/' + p["gh"] + '.git'
+    paths: #@ [p["path"]]
+#@ end
+
+jobs:
+#@ for p in data.values.pipelines:
+- name: #@ 'set_' + p["name"]
+  plan:
+  - get: repository
+    trigger: true
+    resource: #@ p["name"]
+  - set_pipeline: #@ p["name"]
+    file: #@ 'repository/' + p["path"]
+    team: #@ p["team"]
+#@ end

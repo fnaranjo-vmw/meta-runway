@@ -1,0 +1,36 @@
+#!#####################################################################
+#! The absolute minimum requirement to automate setting pipelines is
+#! to have some kind of index containing the pipelines we want to set
+#! along with some metadata about where to set it, with which name, etc.
+#!#####################################################################
+#! OR, alternatively, make pipelines self-setting.
+#! However this second approach assumes that whoever needs to set the pipeline
+#! for the first time knows where, how many and how to set each of them.
+#!#####################################################################
+
+#@data/values
+---
+pipelines:
+- { team: cryo, gh: pivotal/cryogenics-concourse-tasks, path: pipelines/bosh-addons/docker-images/pipeline.yml          , name: docker-images }
+- { team: cryo, gh: pivotal/cryogenics-concourse-tasks, path: pipelines/bosh-addons/setup-infrastructure/pipeline.yml   , name: setup-infrastructure }
+- { team: cryo, gh: pivotal/cryogenics-concourse-tasks, path: pipelines/toolsmiths-private-pool/pipeline.yml            , name: toolsmiths-private-pool }
+
+- { team: cryo, gh: cloudfoundry/disaster-recovery-acceptance-tests           , path: ci/pipelines/drats/pipeline.yml                         , name: drats }
+- { team: cryo, gh: cloudfoundry/bosh-disaster-recovery-acceptance-tests      , path: ci/pipelines/b-drats/pipeline.yml                       , name: b-drats }
+- { team: cryo, gh: cloudfoundry/bosh-backup-and-restore                      , path: ci/pipelines/docker-build/pipeline.yml                  , name: docker-build }
+- { team: cryo, gh: cloudfoundry/bosh-backup-and-restore                      , path: ci/pipelines/bbr-cli/pipeline.yml                       , name: bbr-cli }
+- { team: cryo, gh: cloudfoundry/backup-and-restore-sdk-release               , path: ci/pipelines/backup-and-restore-sdk-release/pipeline.yml, name: bbr-sdk } 
+
+- { team: cryo, gh: cloudfoundry/bosh-bootloader, path: ci/pipelines/bosh-bootloader.yml   , name: bbl }
+- { team: cryo, gh: pivotal-cf/bam-ci           , path: pipelines/docker_images_gcr.yml    , name: docker-images-gcr }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: nfsbroker.yml                      , name: nfsbroker }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: mapfs.yml                          , name: mapfs }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: nfsv3driver.yml                    , name: nfsv3driver }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: smbbroker.yml                      , name: smbbroker }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: smbdriver.yml                      , name: smbdriver }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: docker-image-build.yml             , name: docker-image-build }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: nfs-volume-release.yml             , name: nfs-volume-release }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: mapfs-release.yml                  , name: mapfs-release }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: smb-volume-release.yml             , name: smb-volume-release }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: norsk.yml                          , name: norsk }
+- { team: cryo, gh: cloudfoundry/persi-ci       , path: shared-units.yml                   , name: shared-units }
